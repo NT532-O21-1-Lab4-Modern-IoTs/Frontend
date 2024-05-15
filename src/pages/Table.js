@@ -45,14 +45,28 @@ function Table() {
         Header: 'ID',
         accessor: '_id',
       },
-      {
-        Header: 'Device',
-        accessor: () => 'ESP8266'
-      },
-      {
-        Header: 'Sensor',
-        accessor: () => 'DHT11'
-      },
+          {
+      Header: 'Device',
+      accessor: (row) => {
+        // Kiểm tra nếu temperature là null
+        if (row.temperature === null) {
+          return 'Raspberry';
+        } else {
+          return 'ESP8266';
+        }
+      }
+    },
+    {
+      Header: 'Sensor',
+      accessor: (row) => {
+        // Kiểm tra nếu temperature là null
+        if (row.temperature === null) {
+          return 'BH1750';
+        } else {
+          return 'DHT11';
+        }
+      }
+    },
       {
         Header: 'Temperature',
         accessor: 'temperature',
@@ -60,6 +74,10 @@ function Table() {
       {
         Header: 'Humidity',
         accessor: 'humidity',
+      },
+      {
+        Header: 'Light',
+        accessor: 'light',
       },
       {
         Header: 'Timestamp',

@@ -6,23 +6,23 @@ import axios from 'axios';
 
 function Main() {
   const [data, setData] = useState([]);
+  const NULL_VALUE = 30; // Giá trị tạm thời cho trường null
 
   useEffect(() => {
     axios.get('http://localhost:8000/mongoDB/getAll/DHT11')
       .then(response => {
         const rawData = response.data;
-        const latestData = rawData.slice(-10); // Get the last 10 entries
+        const latestData = rawData.slice(-10); // Lấy 10 mục cuối cùng
         const formattedData = latestData.map(item => ({
-          timestamp: new Date(item.timestamp).toLocaleTimeString(), // Convert timestamp to readable format
-          temperature: item.temperature,
-            humidity: item.humidity,
-          light: item.light,
+          timestamp: new Date(item.timestamp).toLocaleTimeString(), // Chuyển đổi timestamp sang định dạng có thể đọc được
+          temperature: item.temperature !== null ? item.temperature : NULL_VALUE, // Nếu là null, gán giá trị NULL_VALUE
+          humidity: item.humidity !== null ? item.humidity : NULL_VALUE, // Nếu là null, gán giá trị NULL_VALUE
+          light: item.light !== null ? item.light : NULL_VALUE, // Nếu là null, gán giá trị NULL_VALUE
         }));
-          setData(formattedData);
-          console.log(formattedData)
+        setData(formattedData);
       })
       .catch(error => {
-        console.error('Error fetching data:', error);
+        console.error('Lỗi khi lấy dữ liệu:', error);
       });
   }, []);
 
@@ -46,7 +46,7 @@ function Main() {
         <Bar dataKey="humidity" fill="#8884d8" />
       </BarChart>
 
- <ScatterChart width={500} height={300}>
+      <ScatterChart width={500} height={300} data={data}>
         <CartesianGrid />
         <XAxis dataKey="timestamp" />
         <YAxis />
