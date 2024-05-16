@@ -64,7 +64,7 @@ export default function Control() {
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <h1>Điều khiển đèn led - Bài 4</h1>
+        <h1>Điều khiển đèn led</h1>
       </div>
       <div style={styles.buttonGroup}>
         <div style={styles.ledControl}>

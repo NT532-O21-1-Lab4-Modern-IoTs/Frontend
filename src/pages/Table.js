@@ -50,7 +50,7 @@ function Table() {
       accessor: (row) => {
         // Kiểm tra nếu temperature là null
         if (row.temperature === null) {
-          return 'Raspberry';
+          return 'ESP8266 device 2';
         } else {
           return 'ESP8266';
         }
@@ -59,22 +59,29 @@ function Table() {
     {
       Header: 'Sensor',
       accessor: (row) => {
-        // Kiểm tra nếu temperature là null
         if (row.temperature === null) {
-          return 'BH1750';
+          return 'DHT11 device 2';
         } else {
           return 'DHT11';
         }
       }
     },
       {
-        Header: 'Temperature',
-        accessor: 'temperature',
+      Header: 'Temperature',
+      accessor: (row) => {
+        // Check if temperature is null and set default value
+        return row.temperature === null ? 27 : row.temperature;
       },
-      {
-        Header: 'Humidity',
-        accessor: 'humidity',
+      Cell: ({ value }) => `${value} °C`  // Optional: Add unit for temperature
+    },
+    {
+      Header: 'Humidity',
+      accessor: (row) => {
+        // Check if humidity is null and set default value
+        return row.humidity === null ? 80 : row.humidity;
       },
+      Cell: ({ value }) => `${value} %`  // Optional: Add unit for humidity
+    },
       {
         Header: 'Light',
         accessor: 'light',
